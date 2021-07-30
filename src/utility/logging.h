@@ -34,16 +34,27 @@
 
 #if ACTLOGLEVEL>LOG_NONE 
    #if defined(ARDUINO)
-     #define default_message              Serial.print("[FT-XBEE] ");
-     #define uart_send_str(x)             default_message Serial.print(x)
-     #define uart_send_strln(x)           default_message Serial.println(x)
-     #define uart_send_dec(x)             default_message Serial.print(x)
-     #define uart_send_decln(x)           default_message Serial.println(x)
-     #define uart_send_hex(x)             default_message Serial.print(x,HEX)
-     #define uart_send_hexln(x)           default_message Serial.println(x,HEX)
-     #define uart_send_bin(x)             default_message Serial.print(x,BIN)
-     #define uart_send_binln(x)           default_message Serial.println(x,BIN)
-     #define uart_send_buf_len(buf,len)   default_message Serial.write(buf,len)
+     #define default_message                    Serial.print(F("[FT-XBEE] "));
+     
+     #define first_uart_send_str(x)             default_message Serial.print(x)
+     #define first_uart_send_strln(x)           default_message Serial.println(x)
+     #define first_uart_send_dec(x)             default_message Serial.print(x)
+     #define first_uart_send_decln(x)           default_message Serial.println(x)
+     #define first_uart_send_hex(x)             default_message Serial.print(x,HEX)
+     #define first_uart_send_hexln(x)           default_message Serial.println(x,HEX)
+     #define first_uart_send_bin(x)             default_message Serial.print(x,BIN)
+     #define first_uart_send_binln(x)           default_message Serial.println(x,BIN)
+     #define first_uart_send_buf_len(buf,len)   default_message Serial.write(buf,len)
+
+     #define uart_send_str(x)             Serial.print(x)
+     #define uart_send_strln(x)           Serial.println(x)
+     #define uart_send_dec(x)             Serial.print(x)
+     #define uart_send_decln(x)           Serial.println(x)
+     #define uart_send_hex(x)             Serial.print(x,HEX)
+     #define uart_send_hexln(x)           Serial.println(x,HEX)
+     #define uart_send_bin(x)             Serial.print(x,BIN)
+     #define uart_send_binln(x)           Serial.println(x,BIN)
+     #define uart_send_buf_len(buf,len)   Serial.write(buf,len)
    #endif
 #endif
 

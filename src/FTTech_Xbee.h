@@ -43,7 +43,7 @@ public:
 
   /* #region Begin Methods */
   void begin(void);
-  void begin(int baudrate, int timeout);
+  void begin(int timeout);
   /* #endregion */
 
   /* #region Output Methods */
@@ -67,25 +67,24 @@ public:
   /* #endregion */
 
   /* #region AT commands Methods */
-  bool sendAtCommand(uint8_t cmd[], bool debug, uint8_t cmdValue[] = {0}, uint8_t cmdValueLength = 0);
-  bool writeEEPROM(bool debug = false);
+  bool sendAtCommand(uint8_t cmd[], uint8_t cmdValue[] = {0}, uint8_t cmdValueLength = 0);
+  bool writeEEPROM(void);
 
-  bool setEncryptionMode(bool mode, bool debug = false);
-  bool setEncryptionKey(uint8_t key[], uint8_t keyLength, bool debug=false);
-  bool setPowerLevel(uint8_t powerLevel, bool debug=false);
+  bool setEncryptionMode(bool mode);
+  bool setEncryptionKey(uint8_t key[], uint8_t keyLength);
+  bool setPowerLevel(uint8_t powerLevel);
 
-  bool receiveModuleAddress(bool debug=false);
-  bool receivePowerLevel(bool debug=false);
-  bool receiveEncryptionMode(bool debug=false);
+  bool receiveModuleAddress(void);
+  bool receivePowerLevel(void);
+  bool receiveEncryptionMode(void);
   /* #endregion */
 
   /* #region other methods */
-  void print64bitAddress();
+  void print64bitAddress(void);
   void print64bitAddress(uint8_t *address);
   /* #endregion */
 
 private:
-  int _baudrate = 115200;
   int _timeout = 500;
   char _ChipID[33] = {0};
   uint8_t _encryptionMode;
