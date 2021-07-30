@@ -279,19 +279,22 @@ uint8_t FTTech_Xbee::getResponse(int timeout)
   return 0;
 }
 
-bool FTTech_Xbee::findInCharArray(char inString[], char target[])
+
+// return uint8_t "1" if no error, "0" if error
+uint8_t FTTech_Xbee::findInCharArray(char inString[], char target[])
 {
   #if ACTLOGLEVEL>=LOG_DEBUG_V3
     first_uart_send_strln(F("FTTech_Xbee::findInCharArray(char inString[], char target[]) DEBUG_V3:Function started"));
   #endif
 
   if (strstr(inString, target))
-    return true;
+    return 1;
   else
-    return false;
+    return 0;
 }
 
-bool FTTech_Xbee::readAndFindData(char target[])
+// return uint8_t "1" if no error, "0" if error
+uint8_t FTTech_Xbee::readAndFindData(char target[])
 {
   #if ACTLOGLEVEL>=LOG_DEBUG_V3
     first_uart_send_strln(F("FTTech_Xbee::readAndFindData(char target[]) DEBUG_V3:Function started"));
@@ -300,7 +303,8 @@ bool FTTech_Xbee::readAndFindData(char target[])
   return readAndFindData(target, _timeout);
 }
 
-bool FTTech_Xbee::readAndFindData(char target[], int timeout)
+// return uint8_t "1" if no error, "0" if error
+uint8_t FTTech_Xbee::readAndFindData(char target[], int timeout)
 {
   #if ACTLOGLEVEL>=LOG_DEBUG_V3
     first_uart_send_strln(F("FTTech_Xbee::readAndFindData(char target[], int timeout) DEBUG_V3:Function started"));
@@ -310,7 +314,7 @@ bool FTTech_Xbee::readAndFindData(char target[], int timeout)
   {
     return findInCharArray(_in_payload, target);
   }
-  return false;
+  return 0;
 }
 
 bool FTTech_Xbee::sendAtCommand(uint8_t cmd[], uint8_t cmdValue[], uint8_t cmdValueLength) 

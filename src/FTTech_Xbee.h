@@ -61,9 +61,9 @@ public:
   /* #region Input Methods */
   uint8_t getResponse();
   uint8_t getResponse(int timeout);
-  bool findInCharArray(char inString[], char target[]);
-  bool readAndFindData(char target[]);
-  bool readAndFindData(char target[], int timeout);
+  uint8_t findInCharArray(char inString[], char target[]);
+  uint8_t readAndFindData(char target[]);
+  uint8_t readAndFindData(char target[], int timeout);
   /* #endregion */
 
   /* #region AT commands Methods */

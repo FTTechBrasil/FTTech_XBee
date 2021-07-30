@@ -35,7 +35,7 @@
 #if ACTLOGLEVEL>LOG_NONE 
    #if defined(ARDUINO)
      #define default_message                    Serial.print(F("[FT-XBEE] "));
-     
+
      #define first_uart_send_str(x)             default_message Serial.print(x)
      #define first_uart_send_strln(x)           default_message Serial.println(x)
      #define first_uart_send_dec(x)             default_message Serial.print(x)
