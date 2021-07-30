@@ -59,8 +59,8 @@ public:
   /* #endregion */
 
   /* #region Input Methods */
-  bool getResponse();
-  bool getResponse(int timeout);
+  uint8_t getResponse();
+  uint8_t getResponse(int timeout);
   bool findInCharArray(char inString[], char target[]);
   bool readAndFindData(char target[]);
   bool readAndFindData(char target[], int timeout);
