@@ -25,6 +25,7 @@
 class FTTech_Xbee
 {
 public:
+  FTTech_Xbee(Stream& serial);
   /* #region Get Methods */
   void getAddress(uint8_t *address);
   void getOutPayload(uint8_t *payload);
@@ -41,8 +42,8 @@ public:
   /* #endregion */
 
   /* #region Begin Methods */
-  void begin(Stream &serial);
-  void begin(Stream &serial, int baudrate, int timeout);
+  void begin(void);
+  void begin(int baudrate, int timeout);
   /* #endregion */
 
   /* #region Output Methods */
@@ -95,6 +96,7 @@ private:
   // TODO: Remove one of those two payloads
   uint8_t _payload[PAYLOAD_SIZE];
   char _in_payload[PAYLOAD_SIZE];
+  Stream& _serial;
   
   XBee _xbee;
   ZBRxResponse _rx;

@@ -16,11 +16,19 @@
 #include "Arduino.h"
 #include "FTTech_Xbee.h"
 #include "XBee.h"
+#include "utility/logging.h"
 
+FTTech_Xbee::FTTech_Xbee(Stream &serial) : _serial(serial)
+{
+  _serial.setTimeout(2000);
+}
 
-/* #region Get Methods */
 void FTTech_Xbee::getOutPayload(uint8_t *payload)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::getOutPayload(uint8_t *payload) DEBUG_V3:Function started"));
+  #endif
+
   for (int i = 0; i < PAYLOAD_SIZE; i++)
   {
     payload[i] = _payload[i];
@@ -29,40 +37,50 @@ void FTTech_Xbee::getOutPayload(uint8_t *payload)
 
 void FTTech_Xbee::getInPayload(char *payload)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::getInPayload(char *payload) DEBUG_V3:Function started"));
+  #endif
+
   for (int i = 0; i < PAYLOAD_SIZE; i++)
   {
     payload[i] = _in_payload[i];
   }
 }
-/* #endregion */  
 
-/* #region Begin Methods */
-void FTTech_Xbee::begin(Stream &serial)
+void FTTech_Xbee::begin(void)
 {
-  begin(serial, _baudrate, _timeout);
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::begin(void) DEBUG_V3:Function started"));
+  #endif
+
+  begin(_baudrate, _timeout);
 }
 
-void FTTech_Xbee::begin(Stream &serial, int baudrate, int timeout)
+void FTTech_Xbee::begin(int baudrate, int timeout)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::begin(int baudrate, int timeout) DEBUG_V3:Function started"));
+  #endif
+
   _rx = ZBRxResponse();
   _baudrate = baudrate;
   _timeout = timeout;
 
-  Serial4.begin(_baudrate);
-  _xbee.setSerial(Serial4);
+  _xbee.setSerial(_serial);
 
   Serial.println(F("Parameters:"));
   Serial.print(F("\tBaudrate: ")); Serial.println(_baudrate);
   Serial.print(F("\tTimeout: ")); Serial.println(_timeout);
   Serial.print(F("\tPayload Size: ")); Serial.println(PAYLOAD_SIZE);
   Serial.println("\n");
-
 }
-/* #endregion */
 
-/* #region Output Methods */
 void FTTech_Xbee::message(char *sensorName, float sensorValue1, float sensorValue2, float sensorValue3, float sensorValue4)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::message(char *sensorName, float sensorValue1, float sensorValue2, float sensorValue3, float sensorValue4) DEBUG_V3:Function started"));
+  #endif
+
   uint8_t len = 15 + 1 + 15 + 1 + 15 + 1 + 15; //sensor + sep + sensor + sep + sensor + sep + sensor
   char sensorValueCHR[len] = {0};
 
@@ -76,6 +94,10 @@ void FTTech_Xbee::message(char *sensorName, float sensorValue1, float sensorValu
 
 void FTTech_Xbee::message(char *sensorName, float sensorValue1, float sensorValue2, float sensorValue3)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::message(char *sensorName, float sensorValue1, float sensorValue2, float sensorValue3) DEBUG_V3:Function started"));
+  #endif
+
   uint8_t len = 15 + 1 + 15 + 1 + 15; //sensor + sep + sensor + sep + sensor
   char sensorValueCHR[len] = {0};
 
@@ -88,6 +110,10 @@ void FTTech_Xbee::message(char *sensorName, float sensorValue1, float sensorValu
 
 void FTTech_Xbee::message(char *sensorName, int sensorValue1, int sensorValue2, float sensorValue3)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::message(char *sensorName, int sensorValue1, int sensorValue2, float sensorValue3) DEBUG_V3:Function started"));
+  #endif
+
   uint8_t len = 15 + 1 + 15 + 1 + 15; //sensor + sep + sensor + sep + sensor
   char sensorValueCHR[len] = {0};
 
@@ -100,6 +126,10 @@ void FTTech_Xbee::message(char *sensorName, int sensorValue1, int sensorValue2, 
 
 void FTTech_Xbee::message(char *sensorName, float sensorValue1, float sensorValue2)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::message(char *sensorName, float sensorValue1, float sensorValue2) DEBUG_V3:Function started"));
+  #endif
+
   uint8_t len = 15 + 1 + 15; //sensor + sep + sensor + sep + sensor
   char sensorValueCHR[len] = {0};
 
@@ -111,6 +141,10 @@ void FTTech_Xbee::message(char *sensorName, float sensorValue1, float sensorValu
 
 void FTTech_Xbee::message(char *sensorName, float sensorValue1)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::message(char *sensorName, float sensorValue1) DEBUG_V3:Function started"));
+  #endif
+
   char sensorValueCHR[15];
   String sensorValueSTR = String(sensorValue1, 4);
   sensorValueSTR.toCharArray(sensorValueCHR, 15);
@@ -119,6 +153,10 @@ void FTTech_Xbee::message(char *sensorName, float sensorValue1)
 
 void FTTech_Xbee::message(char *sensorName, char *sensorValue1)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::message(char *sensorName, char *sensorValue1) DEBUG_V3:Function started"));
+  #endif
+
   char separatorLv1[] = "#";
   char separatorLv2[] = ":";
 
@@ -144,6 +182,10 @@ void FTTech_Xbee::message(char *sensorName, char *sensorValue1)
 
 void FTTech_Xbee::messageClearPayload(void)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::messageClearPayload(void) DEBUG_V3:Function started"));
+  #endif
+
   for (int i = 0; i < PAYLOAD_SIZE; i++)
   {
     _payload[i] = '\0';
@@ -153,30 +195,43 @@ void FTTech_Xbee::messageClearPayload(void)
 
 void FTTech_Xbee::sendPayloadBoadcast(void)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::sendPayloadBoadcast(void) DEBUG_V3:Function started"));
+  #endif
+
   sendPayload(0x00000000, 0x0000ffff);
 }
 
-// TODO: Remove Serial4 from here... maybe create a Stream object
 void FTTech_Xbee::sendPayload(int address_MS, int address_LS)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::sendPayload(int address_MS, int address_LS) DEBUG_V3:Function started"));
+  #endif
+
   XBeeAddress64 addr64 = XBeeAddress64(address_MS, address_LS);
   ZBTxStatusResponse txStatus = ZBTxStatusResponse();
 
   ZBTxRequest zbTx = ZBTxRequest(addr64, _payload, _payload_len);
   _xbee.send(zbTx);
-  Serial4.flush();
+  _serial.flush();
   delay(100);
 }
-/* #endregion */
 
-/* #region Input Methods */ 
 bool FTTech_Xbee::getResponse()
 {
-  getResponse(_timeout);
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::getResponse() DEBUG_V3:Function started"));
+  #endif
+
+  return getResponse(_timeout);
 }
 
 bool FTTech_Xbee::getResponse(int timeout)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::getResponse(int timeout) DEBUG_V3:Function started"));
+  #endif
+
   uint8_t rssi;
   uint8_t option;
 
@@ -222,6 +277,10 @@ bool FTTech_Xbee::getResponse(int timeout)
 
 bool FTTech_Xbee::findInCharArray(char inString[], char target[])
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::findInCharArray(char inString[], char target[]) DEBUG_V3:Function started"));
+  #endif
+
   if (strstr(inString, target))
     return true;
   else
@@ -230,21 +289,32 @@ bool FTTech_Xbee::findInCharArray(char inString[], char target[])
 
 bool FTTech_Xbee::readAndFindData(char target[])
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::readAndFindData(char target[]) DEBUG_V3:Function started"));
+  #endif
+
   return readAndFindData(target, _timeout);
 }
 
 bool FTTech_Xbee::readAndFindData(char target[], int timeout)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::readAndFindData(char target[], int timeout) DEBUG_V3:Function started"));
+  #endif
+
   if (getResponse(timeout))
   {
     return findInCharArray(_in_payload, target);
   }
   return false;
 }
-/* #endregion */
 
-/* #region AT commands Methods */
-bool FTTech_Xbee::sendAtCommand(uint8_t cmd[], bool debug, uint8_t cmdValue[], uint8_t cmdValueLength) {
+bool FTTech_Xbee::sendAtCommand(uint8_t cmd[], bool debug, uint8_t cmdValue[], uint8_t cmdValueLength) 
+{
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::sendAtCommand(uint8_t cmd[], bool debug, uint8_t cmdValue[], uint8_t cmdValueLength) DEBUG_V3:Function started"));
+  #endif
+
   bool success = false;
 
   atRequest.setCommand(cmd);
@@ -331,12 +401,20 @@ bool FTTech_Xbee::sendAtCommand(uint8_t cmd[], bool debug, uint8_t cmdValue[], u
 
 bool FTTech_Xbee::writeEEPROM(bool debug)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::writeEEPROM(bool debug) DEBUG_V3:Function started"));
+  #endif
+  
   uint8_t cmd[] = {'W','R'};
   return sendAtCommand(cmd, debug);
 }
 
 bool FTTech_Xbee::setEncryptionMode(bool mode, bool debug)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::setEncryptionMode(bool mode, bool debug) DEBUG_V3:Function started"));
+  #endif
+
   uint8_t cmd[] = {'E','E'};
   uint8_t cmdValue[1] = {0};
   uint8_t cmdValueLength = 1;
@@ -351,6 +429,10 @@ bool FTTech_Xbee::setEncryptionMode(bool mode, bool debug)
 
 bool FTTech_Xbee::setEncryptionKey(uint8_t key[], uint8_t keyLength, bool debug)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::setEncryptionKey(uint8_t key[], uint8_t keyLength, bool debug) DEBUG_V3:Function started"));
+  #endif
+
   uint8_t cmd[] = {'K','Y'};
 
   return sendAtCommand(cmd, debug, key, keyLength);
@@ -358,6 +440,10 @@ bool FTTech_Xbee::setEncryptionKey(uint8_t key[], uint8_t keyLength, bool debug)
 
 bool FTTech_Xbee::receiveModuleAddress(bool debug)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::receiveModuleAddress(bool debug) DEBUG_V3:Function started"));
+  #endif
+
   bool success = false;
   // serial high
   uint8_t shCmd[] = {'S','H'};
@@ -382,6 +468,10 @@ bool FTTech_Xbee::receiveModuleAddress(bool debug)
 
 bool FTTech_Xbee::receivePowerLevel(bool debug)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::receivePowerLevel(bool debug) DEBUG_V3:Function started"));
+  #endif
+
   uint8_t cmd[] = {'P','L'};
 
   if(sendAtCommand(cmd, debug))
@@ -394,6 +484,10 @@ bool FTTech_Xbee::receivePowerLevel(bool debug)
 
 bool FTTech_Xbee::receiveEncryptionMode(bool debug)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::receiveEncryptionMode(bool debug) DEBUG_V3:Function started"));
+  #endif
+
   uint8_t cmd[] = {'E','E'};
 
   if(sendAtCommand(cmd, debug))
@@ -406,6 +500,10 @@ bool FTTech_Xbee::receiveEncryptionMode(bool debug)
 
 bool FTTech_Xbee::setPowerLevel(uint8_t powerLevel, bool debug)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::setPowerLevel(uint8_t powerLevel, bool debug) DEBUG_V3:Function started"));
+  #endif
+
   uint8_t cmd[] = {'P','L'};
   uint8_t cmdValue[1] = {0};
   uint8_t cmdValueLength = 1;
@@ -417,16 +515,22 @@ bool FTTech_Xbee::setPowerLevel(uint8_t powerLevel, bool debug)
 
   return result;
 }
-/* #endregion */
 
-/* #region other methods */
 void FTTech_Xbee::print64bitAddress()
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::print64bitAddress() DEBUG_V3:Function started"));
+  #endif
+
   print64bitAddress(_address);
 }
 
 void FTTech_Xbee::print64bitAddress(uint8_t address[8])
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::print64bitAddress(uint8_t address[8]) DEBUG_V3:Function started"));
+  #endif
+
   Serial.print("64 bit Address: ");
   for (int i = 0; i < 8; i++) {
     if (address[i] <= 0x0F) Serial.print(F("0"));
@@ -434,12 +538,13 @@ void FTTech_Xbee::print64bitAddress(uint8_t address[8])
   }
   Serial.println(F(" "));
 }
-/* #endregion */
 
-
-/* #region private methods */
 void FTTech_Xbee::messageAppendValue(char *sensorValue, float sensorValue1, bool last)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::messageAppendValue(char *sensorValue, float sensorValue1, bool last) DEBUG_V3:Function started"));
+  #endif
+
   char separatorLv3[] = ";";
   char tempValue[15] = {0};
 
@@ -461,6 +566,10 @@ void FTTech_Xbee::messageAppendValue(char *sensorValue, float sensorValue1, bool
 
 void FTTech_Xbee::messageAppendValue(char *sensorValue, int sensorValue1, bool last)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::messageAppendValue(char *sensorValue, int sensorValue1, bool last) DEBUG_V3:Function started"));
+  #endif
+
   char separatorLv3[] = ";";
   char tempValue[15] = {0};
 
@@ -476,7 +585,10 @@ void FTTech_Xbee::messageAppendValue(char *sensorValue, int sensorValue1, bool l
 
 void FTTech_Xbee::messageAddString(char *string)
 {
+  #if ACTLOGLEVEL>=LOG_DEBUG_V3
+    uart_send_strln(F("FTTech_Xbee::messageAddString(char *string) DEBUG_V3:Function started"));
+  #endif
+
   memcpy(&_payload[_payload_len], string, strlen(string));
   _payload_len += strlen(string);
 }
-/* #endregion */
