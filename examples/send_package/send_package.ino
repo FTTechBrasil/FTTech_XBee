@@ -25,7 +25,8 @@
 /* *****************************************
  * USER DEFINED VARIABLES
  */
-#define XBEE_SERIAL Serial4           // XBee Serial port. If you're using FTClicks board it will be one Serial4
+#define XBEE_SERIAL Serial2           // XBee Serial port. If you're using FTClicks board it will be one Serial4
+static const uint8_t xbee_click = 2
 int BAUDRATE = 115200;                // XBee and Serial boudrate, you can set diferent ones if you want but remmeber to check XBee configuration using XCTU
 int address_HB = 0x0013A200;          // Most significant bytes from XBee's address
 int address_LB = 0x40F67850;          // Least significant bytes from XBee's address
@@ -33,7 +34,7 @@ uint8_t payload[100] = {0};
 /* *****************************************
  * PROGRAM VARIABLES - AVOID CHANGING THEM
  */
-FTTech_Xbee xbee;
+FTTech_Xbee xbee(XBEE_SERIAL);
 
 
 void setup()
@@ -47,12 +48,13 @@ void setup()
   Serial.println(F("++++++++++++++++++++++++++++++++++++++++++++++++++"));
 
   XBEE_SERIAL.begin(BAUDRATE);
+  xbee.begin();
+  
   // All the other arduments will be loaded by default, you can chance them by calling begin(Stream &serial, int baudrate, int timeout, int payload_size)
-  xbee.begin(XBEE_SERIAL);
   xbee.setChipID(FTClicks.ChipID);
 
   // Turn XBee power on
-  FTClicks.ON(4);
+  FTClicks.turnON(xbee_click);
 
 }
 
@@ -60,7 +62,7 @@ void loop()
 {
     xbee.messageClearPayload();
     xbee.message("TEST_STR", "12345");
-    xbee.sendPayload(address_HB, address_LB);
+    xbee.sendPayloadBroadcast();
 
     xbee.getOutPayload(payload);
     printData(payload, xbee.getOutPayloadLengh());

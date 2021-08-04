@@ -191,13 +191,13 @@ void FTTech_Xbee::messageClearPayload(void)
   _payload_len = 0;
 }
 
-void FTTech_Xbee::sendPayloadBoadcast(void)
+void FTTech_Xbee::sendPayloadBroadcast(void)
 {
   #if ACTLOGLEVEL>=LOG_DEBUG_V3
-    first_uart_send_strln(F("FTTech_Xbee::sendPayloadBoadcast(void) DEBUG_V3:Function started"));
+    first_uart_send_strln(F("FTTech_Xbee::sendPayloadBroadcast(void) DEBUG_V3:Function started"));
   #endif
 
-  sendPayload(0x00000000, 0x0000ffff);
+  sendPayload(0x00000000, 0x0000FFFF);
 }
 
 void FTTech_Xbee::sendPayload(int address_MS, int address_LS)

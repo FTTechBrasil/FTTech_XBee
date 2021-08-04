@@ -54,7 +54,7 @@ public:
   void message(char* sensorName, float sensorValue1);
   void message(char* sensorName, char* sensorValue1);
   void messageClearPayload(void);
-  void sendPayloadBoadcast(void);
+  void sendPayloadBroadcast(void);
   void sendPayload(int address_MS, int address_LS);
   /* #endregion */
 

@@ -29,8 +29,8 @@
  * in your Arduino IDE. 
  */
 #warning "You can configure LogObject and ACTLOGLEVEL in 'utility/logging.h'. More verbosity more memory usage."
-#define ACTLOGLEVEL     LOG_DEBUG_V3
-//#define ACTLOGLEVEL     LOG_INFO
+//#define ACTLOGLEVEL     LOG_DEBUG_V3
+#define ACTLOGLEVEL     LOG_INFO
 
 #if ACTLOGLEVEL>LOG_NONE 
    #if defined(ARDUINO)
