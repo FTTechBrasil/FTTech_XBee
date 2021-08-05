@@ -49,13 +49,12 @@ void setup()
 
   XBEE_SERIAL.begin(BAUDRATE);
   xbee.begin();
-  
+
   // All the other arduments will be loaded by default, you can chance them by calling begin(Stream &serial, int baudrate, int timeout, int payload_size)
   xbee.setChipID(FTClicks.ChipID);
 
   // Turn XBee power on
   FTClicks.turnON(xbee_click);
-
 }
 
 void loop()

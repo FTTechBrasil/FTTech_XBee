@@ -26,24 +26,21 @@
  * USER DEFINED VARIABLES
  */
 #define XBEE_SERIAL Serial4                 // XBee Serial port. If you're using FTClicks board it will be one Serial4
+static const uint8_t xbee_click = 4
 int BAUDRATE = 115200;                      // XBee and Serial boudrate, you can set diferent ones if you want but remmeber to check XBee configuration using XCTU
 int address_HB = 0x0013A200;                // Most significant bytes from XBee's address
 int address_LB = 0x40F67850;                // Least significant bytes from XBee's address
-uint8_t kyCmdValue[] = "WaspmoteLinkKey!";  // Encryption key, remmeber to set it in all your devices
+uint8_t kyCmdValue[] = "SuperSecretKey!";  // Encryption key, remmeber to set it in all your devices
 uint8_t keyLength = 16;                     // Key Length
 uint8_t payload[100] = {0};
 /* *****************************************
  * PROGRAM VARIABLES - AVOID CHANGING THEM
  */
-FTTech_Xbee xbee;
-
+FTTech_Xbee xbee(XBEE_SERIAL);
 
 void setup()
 {
   FTClicks.begin();
-  
-  // Turn XBee power on
-  FTClicks.ON(4);
   
   Serial.begin(BAUDRATE);
 
@@ -53,8 +50,10 @@ void setup()
   Serial.println(F("++++++++++++++++++++++++++++++++++++++++++++++++++"));
 
   XBEE_SERIAL.begin(BAUDRATE);
-  // All the other arduments will be loaded by default, you can chance them by calling begin(Stream &serial, int baudrate, int timeout, int payload_size)
-  xbee.begin(XBEE_SERIAL);
+  xbee.begin();
+
+  // Turn XBee power on
+  FTClicks.turnON(xbee_click);
   
   delay(5000);
   if(xbee.receiveEncryptionMode(false))
