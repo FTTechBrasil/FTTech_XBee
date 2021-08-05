@@ -1,13 +1,12 @@
-# [FTTech XBee Library for Arduino](https://github.com/FTTech/Public_ArduinoSAMD51ClicksLib)
+# FTTech XBee Library
 
-Arduino library to make easier to use an XBee with out board. Like sending and receiving packages or changing its parameters.
+## Introduction
+This is an Arduino Library Compatible with XBees created by FTTech to facilitate the usage with FTTech's boards.
 
-Currently tested with the following hardware:
+## Dependencies
+- [FTTech SAMD51 Clicks](https://github.com/FTTechBrasil/FTTech_SAMD51_Clicks)
+- [XBee-Arduino library](https://github.com/andrewrapp/xbee-arduino)
 
-*  FTTech SAMD51 Clicks board.
+## License
+The MIT License (MIT)
 
-## News
-
-* 1.0.1 Initial Release
-* 1.0.2 Added receive methods
-* 1.0.3 Changed code organization
