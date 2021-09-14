@@ -18,7 +18,9 @@
 #include "XBee.h"
 #include "utility/logging.h"
 
-FTTech_Xbee::FTTech_Xbee(Stream &serial) : _serial(serial)
+
+
+FTTech_Xbee::FTTech_Xbee()
 {
   _serial.setTimeout(2000);
 }
@@ -47,20 +49,23 @@ void FTTech_Xbee::getInPayload(char *payload)
   }
 }
 
-void FTTech_Xbee::begin(void)
+void FTTech_Xbee::begin(uint32_t _baudrate)
 {
   #if ACTLOGLEVEL>=LOG_DEBUG_V3
     first_uart_send_strln(F("FTTech_Xbee::begin(void) DEBUG_V3:Function started"));
   #endif
 
-  begin(_timeout);
+  begin(_timeout, _baudrate);
 }
 
-void FTTech_Xbee::begin(int timeout)
+void FTTech_Xbee::begin(int timeout, uint32_t __baudrate)
 {
   #if ACTLOGLEVEL>=LOG_DEBUG_V3
     first_uart_send_strln(F("FTTech_Xbee::begin(int baudrate, int timeout) DEBUG_V3:Function started"));
   #endif
+
+  _serial.begin(__baudrate);
+  while(!_serial);
 
   _rx = ZBRxResponse();
   _timeout = timeout;

@@ -25,14 +25,13 @@
 /* *****************************************
  * USER DEFINED VARIABLES
  */
-#define XBEE_SERIAL Serial4                 // XBee Serial port. If you're using FTClicks board it will be one Serial4
 static const uint8_t xbee_click = 4
 int BAUDRATE = 115200;                      // XBee and Serial boudrate, you can set diferent ones if you want but remmeber to check XBee configuration using XCTU
 uint8_t powerLevel = 3;                     // XBee's PowerLevel, 4 is maximum
 /* *****************************************
  * PROGRAM VARIABLES - AVOID CHANGING THEM
  */
-FTTech_Xbee xbee(XBEE_SERIAL);
+FTTech_Xbee xbee();
 
 void setup()
 {
@@ -48,8 +47,7 @@ void setup()
   Serial.println(F("FTTech - Test XBee Set PowerLevel"));
   Serial.println(F("++++++++++++++++++++++++++++++++++++++++++++++++++"));
 
-  XBEE_SERIAL.begin(BAUDRATE);
-  xbee.begin();
+  xbee.begin(BAUDRATE);
   
   delay(5000);
   if(xbee.receivePowerLevel())
