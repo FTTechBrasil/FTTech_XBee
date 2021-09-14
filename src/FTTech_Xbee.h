@@ -22,10 +22,18 @@
 
 #define PAYLOAD_SIZE 100
 
+#ifdef _VARIANT_SAMD51_1S
+    #define _serial Serial2
+#endif
+
+#ifdef _VARIANT_SAMD51_3S
+    #define _serial Serial4
+#endif
+
 class FTTech_Xbee
 {
 public:
-  FTTech_Xbee(Stream& serial);
+  FTTech_Xbee();
   /* #region Get Methods */
   void getAddress(uint8_t *address);
   void getOutPayload(uint8_t *payload);
@@ -42,8 +50,8 @@ public:
   /* #endregion */
 
   /* #region Begin Methods */
-  void begin(void);
-  void begin(int timeout);
+  void begin(uint32_t _baudrate);
+  void begin(int timeout, uint32_t __baudrate);
   /* #endregion */
 
   /* #region Output Methods */
@@ -95,7 +103,7 @@ private:
   // TODO: Remove one of those two payloads
   uint8_t _payload[PAYLOAD_SIZE];
   char _in_payload[PAYLOAD_SIZE];
-  Stream& _serial;
+//  Stream& _serial;
   
   XBee _xbee;
   ZBRxResponse _rx;

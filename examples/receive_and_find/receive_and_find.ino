@@ -24,7 +24,6 @@
 /* *****************************************
  * USER DEFINED VARIABLES
  */
-#define XBEE_SERIAL Serial4           // XBee Serial port. If you're using FTClicks board it will be one Serial4
 static const uint8_t xbee_click = 4
 int BAUDRATE = 115200;                //XBee and Serial boudrate, you can set diferent ones if you want but remmeber to check XBee configuration using XCTU
 char target_rick[] = "Never Gonna";   //Message to be found inside received package
@@ -33,7 +32,7 @@ char target_rick[] = "Never Gonna";   //Message to be found inside received pack
 /* *****************************************
  * PROGRAM VARIABLES - AVOID CHANGING THEM
  */
-FTTech_Xbee xbee(XBEE_SERIAL);
+FTTech_Xbee xbee();
 
 void setup()
 {
@@ -45,8 +44,7 @@ void setup()
   Serial.println(F("FTTech - XBee Receiving Test"));
   Serial.println(F("++++++++++++++++++++++++++++++++++++++++++++++++++"));
 
-  XBEE_SERIAL.begin(BAUDRATE);
-  xbee.begin();
+  xbee.begin(BAUDRATE);
 
   // Turn XBee power on
   FTClicks.turnON(xbee_click);
