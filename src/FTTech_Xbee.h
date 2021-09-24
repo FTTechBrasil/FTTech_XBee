@@ -23,11 +23,11 @@
 #define PAYLOAD_SIZE 100
 
 #ifdef _VARIANT_SAMD51_1S
-    #define _serial Serial2
+    #define _XBEESERIAL Serial2
 #endif
 
 #ifdef _VARIANT_SAMD51_3S
-    #define _serial Serial4
+    #define _XBEESERIAL Serial4
 #endif
 
 class FTTech_Xbee
@@ -103,7 +103,7 @@ private:
   // TODO: Remove one of those two payloads
   uint8_t _payload[PAYLOAD_SIZE];
   char _in_payload[PAYLOAD_SIZE];
-//  Stream& _serial;
+//  Stream& _XBEESERIAL;
   
   XBee _xbee;
   ZBRxResponse _rx;

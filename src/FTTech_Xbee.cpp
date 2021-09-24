@@ -22,7 +22,7 @@
 
 FTTech_Xbee::FTTech_Xbee()
 {
-  _serial.setTimeout(2000);
+  _XBEESERIAL.setTimeout(2000);
 }
 
 void FTTech_Xbee::getOutPayload(uint8_t *payload)
@@ -64,13 +64,13 @@ void FTTech_Xbee::begin(int timeout, uint32_t __baudrate)
     first_uart_send_strln(F("FTTech_Xbee::begin(int baudrate, int timeout) DEBUG_V3:Function started"));
   #endif
 
-  _serial.begin(__baudrate);
-  while(!_serial);
+  _XBEESERIAL.begin(__baudrate);
+  while(!_XBEESERIAL);
 
   _rx = ZBRxResponse();
   _timeout = timeout;
 
-  _xbee.setSerial(_serial);
+  _xbee.setSerial(_XBEESERIAL);
 
   first_uart_send_str(F("Parameters:"));
   first_uart_send_str(F("\tTimeout: ")); uart_send_strln(_timeout);
@@ -216,7 +216,7 @@ void FTTech_Xbee::sendPayload(int address_MS, int address_LS)
 
   ZBTxRequest zbTx = ZBTxRequest(addr64, _payload, _payload_len);
   _xbee.send(zbTx);
-  _serial.flush();
+  _XBEESERIAL.flush();
   delay(100);
 }
 
