@@ -22,6 +22,14 @@
 
 #define PAYLOAD_SIZE 100
 
+#ifdef _VARIANT_SAMD51_SWARM
+    #define _XBEESERIAL Serial2
+#endif
+
+#ifdef _VARIANT_SAMD51_1S_OLD
+    #define _XBEESERIAL Serial2
+#endif
+
 #ifdef _VARIANT_SAMD51_1S
     #define _XBEESERIAL Serial2
 #endif
