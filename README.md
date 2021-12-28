@@ -10,3 +10,5 @@ This is an Arduino Library Compatible with XBees created by FTTech to facilitate
 ## License
 The MIT License (MIT)
 
+## Version
+1.5.0
